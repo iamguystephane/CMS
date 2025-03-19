@@ -1,0 +1,87 @@
+
+
+body {
+    background-image: url("../assets/images/home-bg-image.jpg");
+}
+h1 {
+    font-size: 19px;
+    font-weight: 600;
+}
+input {
+    width: 100%;
+    padding: 5px;
+    border: none;
+    border-bottom: 1px solid gray;
+}
+input:focus {
+    outline: none;
+}
+input::placeholder {
+    color: gray;
+}
+
+form {
+    background-color: white;
+    width: 400px;
+    height: 400px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 25px;
+}
+.form-div-email {
+    position: relative;
+}
+.form-div-password {
+    margin-top: 20px;
+    position: relative;
+}
+.icon-container {
+    position: absolute;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 360ms ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon-container:hover {
+    background-color: black;
+    color: white;
+}
+.icon-eye:hover {
+    color: white;
+}
+.rem-me {
+    margin-top: 15px;
+}
+.remember-me-container {
+    gap: 5px;
+}
+.remember-me {
+    gap: 5px
+}
+.forgot-password {
+    color: blue;
+}
+button {
+    background-color: purple;
+    padding: 5px;
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+    color: white;
+    border-radius: 5px;
+}
+.sign-up {
+    margin-top: 15px;
+    width: 100%;
+}
+.sign-up a {
+    color: blue;
+}
