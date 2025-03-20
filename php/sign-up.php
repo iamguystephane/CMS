@@ -9,6 +9,7 @@
     <title>Complaint Management System - Sign up </title>
 </head>
 <body>
+    <div id="toast" class="hidden fixed top-5 right-5 bg-green-500 text-white py-2 px-4 rounded shadow-lg transition-opacity duration-500"></div>
     <form class='' action='submit-sign-up.php' method='POST' >
         <h1 class='text-xl font-bold' > Sign up </h1>
         <div class='w-full' >
@@ -59,7 +60,8 @@
         <p class="w-full mt-4"> already have an account? <a href="./login.php" style="color: red;"> login </a></p>
         <button type='submit' class='submit-btn w-full bg-purple-500 py-3 rounded text-white mt-5 cursor-pointer hover:bg-purple-800 transition-all duration-500 ease-in-out'> Sign up </button>
     </form>
-<script src='../js/sign-up-validation.js' defer></script>
+    <script src='../js/sign-up-validation.js' defer></script>
+    <script src='../js/toast.js' defer></script>
 </body>
 </html>
 

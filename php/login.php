@@ -9,6 +9,7 @@
     <title>Complaint Management System - Login </title>
 </head>
 <body class="w-full min-h-screen flex items-center justify-center bg-no-repeat bg-center bg-cover">
+    <div id="toast" class="hidden fixed top-0 right-5 bg-green-500 text-white py-2 px-10 rounded shadow-lg transition-opacity duration-500" style="top: 10px;"></div>
     <form action="./submit-login.php" method="POST" >
         <h1 class="text-black text-2xl" > Login </h1>
         <div class="w-full flex form-div-email" >
@@ -33,5 +34,6 @@
         <button type='submit'>Login now </button>
         <p class='sign-up' > Don't have an account? <a href="sign-up.php" > sign up </a> </p>
     </form>
+    <script src="../js/registration-toast.js" defer></script>
 </body>
 </html>

@@ -7,9 +7,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $department = trim($_POST['department']);
     $level = trim($_POST['level']);
     $password = password_hash(trim($_POST['password']), PASSWORD_DEFAULT);
-    $role = trim($_POST['role']); // Ensure you have the 'role' field in your form
+    $role = trim($_POST['role']);
 
-    // Check if the email already exists
     $check_email_sql = "SELECT ID FROM `sign up` WHERE Email = ?";
     $check_stmt = $conn->prepare($check_email_sql);
     $check_stmt->bind_param("s", $email);
@@ -17,7 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $check_stmt->store_result();
 
     if ($check_stmt->num_rows > 0) {
-        echo "Error: This email is already registered. Please use a different email.";
+        echo "<script>localStorage.setItem('toastMessage', 'This email is already registered.'); window.location.href='sign-up.php';</script>";
+        exit();
     } else {
         // Insert new user if email does not exist
         $sql = "INSERT INTO `sign up` (Names, Email, Department, Level, Password, role) VALUES (?, ?, ?, ?, ?, ?)";
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("ssssss", $name, $email, $department, $level, $password, $role);
 
         if ($stmt->execute()) {
-            header("Location: login.php");
+            header("Location: login.php?success=registered");
             exit();
         } else {
             echo "Error: " . $stmt->error;

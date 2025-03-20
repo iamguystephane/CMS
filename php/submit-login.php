@@ -23,9 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Redirect based on role
             if ($user['role'] == 'Admin') {
-                header("Location: admin/admin-dashboard.php");  // Admin dashboard
+                header("Location: admin/admin-dashboard.php?success=logged-in");  // Admin dashboard
             } else {
-                header("Location: student/student-dashboard.php"); // Student dashboard
+                header("Location: student/student-dashboard.php?success=logged-in"); // Student dashboard
             }
         } else {
             echo "Incorrect password!";
