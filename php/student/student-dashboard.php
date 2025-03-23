@@ -38,7 +38,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complaint Management System</title>
+    <title>Complaint Management System - Student dashboard</title>
     <link rel="stylesheet" href='../../styles/student-dashboard.css' >
     <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 </head>
@@ -59,8 +59,8 @@
                 <div class="user-info">
                     <img src="../../assets/images/profile-image.png" class="avatar" alt="User">
                     <div>
-                        <p class="username"><?php echo htmlspecialchars($name)?></p>
-                        <p class="status">Online</p>
+                        <p class="username" style="font-size: 15px;"><?php echo htmlspecialchars($name)?></p>
+                        <p> student </p>
                     </div>
                 </div>
                 <div class='search-box'>

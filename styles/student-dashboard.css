@@ -41,8 +41,8 @@ body {
     cursor: pointer;
 }
 .profile img {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
 }
 .profile-name {
@@ -68,6 +68,7 @@ body {
     background: #2c3e50;
     color: white;
     padding: 20px 0;
+    overflow: auto;
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -84,6 +85,17 @@ body {
     margin-top: 3em;
     width: 90%;
     cursor: pointer;
+    padding: 0 5px;
+}
+.user-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.user-info div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 .user-info:hover {
     background-color: rgba(245, 245, 245, 0.651);
@@ -331,6 +343,8 @@ body {
 /* Adjust profile section */
 .sidebar.collapsed .user-info {
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: 5px;
 }
 

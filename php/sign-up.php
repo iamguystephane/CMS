@@ -61,7 +61,7 @@
         <button type='submit' class='submit-btn w-full bg-purple-500 py-3 rounded text-white mt-5 cursor-pointer hover:bg-purple-800 transition-all duration-500 ease-in-out'> Sign up </button>
     </form>
     <script src='../js/sign-up-validation.js' defer></script>
-    <script src='../js/toast.js' defer></script>
+    <script src='../js/registration-toast.js' defer></script>
 </body>
 </html>
 
