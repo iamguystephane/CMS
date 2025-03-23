@@ -44,33 +44,6 @@
     <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 </head>
 <body>
-    <style>
-        #toast {
-            display: none;
-            position: fixed;
-            bottom: 10px;
-            right: 20px;
-            z-index: 1000;
-            background-color: green;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 8px 5px;
-            width: 250px;
-            height: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 360ms ease-in-out;
-        }
-        #toast.fade-out {
-            opacity: 0;
-            transition: opacity 0.5s ease-out;
-        }
-
-    </style>
-    <div id="toast"></div>
     <div class="container">
         <div class='nav-bar'>
             <p class='logo'> Complaint mgt </p>
@@ -139,6 +112,7 @@
             
             <!-- Main Content -->
             <main class="main-content">
+                <div id="toast"></div>
                 <style>
                     .dashboard {
                         display: flex;

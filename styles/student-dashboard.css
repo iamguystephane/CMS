@@ -1,405 +1,430 @@
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    display: flex;
-    height: 100vh;
-    background-color: #f4f4f4;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  height: 100vh;
+  background-color: #f4f4f4;
 }
 
 .container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .main-content-container {
-    display: flex;
-    width: 100%;
+  display: flex;
+  width: 100%;
 }
 .nav-bar {
-    width: 100%;
-    background-color: rgba(5, 165, 228, 0.904);
-    display: flex;
-    align-items: center;
-    z-index: 999;
-    position: fixed;
-    top: 0;
+  width: 100%;
+  background-color: rgba(5, 165, 228, 0.904);
+  display: flex;
+  align-items: center;
+  z-index: 999;
+  position: fixed;
+  top: 0;
 }
 .nav-bar .logo {
-    text-transform: uppercase;
-    color: white;
-    font-size: 20px;
-    font-weight: 600;
-    text-align: center;
-    width: 300px;
+  text-transform: uppercase;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  width: 300px;
 }
 .nav-bar .profile {
-    width: 70%;
-    display: flex;
-    gap: 8px;
-    justify-content: end;
-    align-items: center;
-    cursor: pointer;
+  width: 70%;
+  display: flex;
+  gap: 8px;
+  justify-content: end;
+  align-items: center;
+  cursor: pointer;
 }
 .profile img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 }
 .profile-name {
-    color: white;
-    font-weight: 600;
+  color: white;
+  font-weight: 600;
 }
 .nav-bar .menu-icon {
-    color: white;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    padding: 5px;
-    display: grid;
-    place-content: center;
-    border-radius: 5px;
-    transition: all 360ms ease-in-out;
+  color: white;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  padding: 5px;
+  display: grid;
+  place-content: center;
+  border-radius: 5px;
+  transition: all 360ms ease-in-out;
 }
 .nav-bar .menu-icon:hover {
-    background-color: black;
+  background-color: black;
 }
 .sidebar {
-    width: 280px;
-    background: #2c3e50;
-    color: white;
-    padding: 20px 0;
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    align-items: center;
-    top: 0;
-    height: 100%;
-    transition: all 360ms ease-in-out;
+  width: 280px;
+  background: #2c3e50;
+  color: white;
+  padding: 20px 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  align-items: center;
+  top: 0;
+  height: 100%;
+  transition: all 360ms ease-in-out;
 }
-
+#toast {
+  display: none;
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+  z-index: 1000;
+  background-color: green;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px 5px;
+  width: 250px;
+  height: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 360ms ease-in-out;
+}
 .user-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    margin-top: 3em;
-    width: 90%;
-    cursor: pointer;
-    padding: 0 5px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 3em;
+  width: 90%;
+  cursor: pointer;
+  padding: 0 5px;
 }
 .user-info img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
 .user-info div {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 .user-info:hover {
-    background-color: rgba(245, 245, 245, 0.651);
-    border-radius: 5px;
+  background-color: rgba(245, 245, 245, 0.651);
+  border-radius: 5px;
 }
 
 .avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    margin-right: 10px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
 .username {
-    font-weight: bold;
-    color: white;
+  font-weight: bold;
+  color: white;
 }
 
 .status {
-    font-size: 12px;
-    color: lightgray;
+  font-size: 12px;
+  color: lightgray;
 }
 
 .search-box {
-    display: flex;
-    align-items: center;
-    border-radius: 5px;
-    border: none;
-    width: 90%;
-    margin-bottom: 20px;
-    background-color: rgba(245, 245, 245, 0.63);
-    padding-right: 4px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  border: none;
+  width: 90%;
+  margin-bottom: 20px;
+  background-color: rgba(245, 245, 245, 0.63);
+  padding-right: 4px;
 }
 .search-box input {
-    width: 100%;
-    padding: 12px 8px;
-    background-color: transparent;
-    border: none;
-    outline: none;
+  width: 100%;
+  padding: 12px 8px;
+  background-color: transparent;
+  border: none;
+  outline: none;
 }
 .search-box .search-icon {
-    width: 15px;
-    height: 15px;
-    padding: 8px;
-    border-radius: 5px;
-    transition: all 360ms ease-in-out;
-    display: grid;
-    place-content: center;
-    cursor: pointer;
+  width: 15px;
+  height: 15px;
+  padding: 8px;
+  border-radius: 5px;
+  transition: all 360ms ease-in-out;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
 }
 .search-icon:hover {
-    background-color: whitesmoke;
-    color: black;
+  background-color: whitesmoke;
+  color: black;
 }
 .search-box::placeholder {
-    color: white;
+  color: white;
 }
 .main-navigation {
-    width: 100%;
-    background-color: rgba(2, 2, 24, 0.473);
-    padding: 2px 0;
+  width: 100%;
+  background-color: rgba(2, 2, 24, 0.473);
+  padding: 2px 0;
 }
 .main-navigation h1 {
-    font-size: 15px;
-    color: gray;
-    padding: 0 15px;
+  font-size: 15px;
+  color: gray;
+  padding: 0 15px;
 }
 .nav-menu {
-    width: 100%;
-    margin-top: 15px;
+  width: 100%;
+  margin-top: 15px;
 }
 .icon {
-    font-size: 30px;
-    display: grid;
-    place-content: center;
+  font-size: 30px;
+  display: grid;
+  place-content: center;
 }
 .nav-menu .menu-list {
-    margin-top: 10px;
-    width: 100%;
-    padding: 5px 0px;
+  margin-top: 10px;
+  width: 100%;
+  padding: 5px 0px;
 }
 .menu-list div {
-    display: flex;
-    align-items: center;
-    gap: 3px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
 }
 .nav-menu .menu-list:hover {
-    background-color: rgba(245, 245, 245, 0.418);
+  background-color: rgba(245, 245, 245, 0.418);
 }
-.nav-menu .menu-list a{
-    padding: 10px;
-    color: white;
-    text-decoration: none;
+.nav-menu .menu-list a {
+  padding: 10px;
+  color: white;
+  text-decoration: none;
 }
 .menu-list div {
-    padding-left: 10px;
+  padding-left: 10px;
 }
 .nav-menu a.active {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .nav-menu a.highlight {
-    color: #27ae60;
+  color: #27ae60;
 }
 
 .main-content {
-    padding: 20px;
-    margin-left: 20%;
-    margin-top: 5%;
-    width: 100%;
-    transition: all 360ms ease-in-out;
+  padding: 20px;
+  margin-left: 20%;
+  margin-top: 5%;
+  width: 100%;
+  transition: all 360ms ease-in-out;
 }
 
 .title {
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .subtitle {
-    font-size: 14px;
-    color: gray;
+  font-size: 14px;
+  color: gray;
 }
 
 .questions-section {
-    background: white;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 20px;
+  background: white;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
 }
 
 .questions-list .question {
-    background: #ecf0f1;
-    border-radius: 5px;
+  background: #ecf0f1;
+  border-radius: 5px;
 }
 
 .question-input {
-    display: flex;
+  display: flex;
 }
 
 .question-input input {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .question-input button {
-    padding: 8px 15px;
-    background: #27ae60;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin-left: 10px;
+  padding: 8px 15px;
+  background: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-left: 10px;
 }
 
 .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
 }
 
 .card {
-    padding: 20px;
-    border-radius: 5px;
-    color: white;
-    text-align: center;
+  padding: 20px;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
 }
 
-.card.orange { background: #e67e22; }
-.card.green { background: #27ae60; }
-.card.red { background: #c0392b; }
-.card.blue { background: #2980b9; }
+.card.orange {
+  background: #e67e22;
+}
+.card.green {
+  background: #27ae60;
+}
+.card.red {
+  background: #c0392b;
+}
+.card.blue {
+  background: #2980b9;
+}
 
 .footer {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 14px;
-    color: white;
-    background-color: gray;
-    margin-left: 20.7%;
-    transition: all 360ms ease-in-out;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: white;
+  background-color: gray;
+  margin-left: 20.7%;
+  transition: all 360ms ease-in-out;
 }
 .footer p {
-    text-align: left;
-    padding-left: 15px;
+  text-align: left;
+  padding-left: 15px;
 }
 
 /*sidebar collapse and expand styles */
 
 /* Sidebar default */
 .sidebar {
-    width: 280px;
-    transition: width 0.3s ease-in-out;
-    overflow: hidden;
+  width: 280px;
+  transition: width 0.3s ease-in-out;
+  overflow: hidden;
 }
 
 /* Collapsed Sidebar */
 .sidebar.collapsed {
-    width: 80px;
+  width: 80px;
 }
 
 /* Hide text links when collapsed */
 .sidebar.collapsed .menu-list a {
-    display: none;
+  display: none;
 }
 
 /* Center icons properly in collapsed mode */
 .sidebar .menu-list div {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .sidebar.collapsed .menu-list div {
-    justify-content: center;
+  justify-content: center;
 }
 
 /* Hide search bar when collapsed */
 .sidebar.collapsed .search-box {
-    display: none;
+  display: none;
 }
 
 /* Hide 'Complaint Management' text when collapsed */
 
 .sidebar.collapsed ~ .nav-bar .logo {
-    opacity: 0;
-    width: 0;
-    display: none;
-    overflow: hidden;
+  opacity: 0;
+  width: 0;
+  display: none;
+  overflow: hidden;
 }
 
 /* Align menu icon properly */
 .nav-bar .menu-icon {
-    position: absolute;
-    left: 300px;
-    transition: left 0.3s ease-in-out;
+  position: absolute;
+  left: 300px;
+  transition: left 0.3s ease-in-out;
 }
 
 .sidebar.collapsed ~ .nav-bar .menu-icon {
-    left: 100px;
+  left: 100px;
 }
 
 /* Adjust profile section */
 .sidebar.collapsed .user-info {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 
 /* Hide profile name in collapsed mode */
 .sidebar.collapsed .username,
 .sidebar.collapsed .status {
-    display: none;
+  display: none;
 }
 
 /* Hide 'Main Navigation' text when collapsed */
 .sidebar.collapsed .main-navigation {
-    display: none;
+  display: none;
 }
 
 /* Expand main content and footer */
 .main-content.expanded {
-    margin-left: 80px;
-    transition: margin-left 0.3s ease-in-out;
+  margin-left: 80px;
+  transition: margin-left 0.3s ease-in-out;
 }
 
 .footer.expanded {
-    margin-left: 100px;
-    transition: margin-left 0.3s ease-in-out;
+  margin-left: 100px;
+  transition: margin-left 0.3s ease-in-out;
 }
 .sidebar.collapsed .menu-icon {
-    position: absolute;
-    left: 0;
+  position: absolute;
+  left: 0;
 }
 .sidebar.collapsed ~ .nav-bar .menu-icon {
-    left: 80px;
-    position: absolute;
+  left: 80px;
+  position: absolute;
 }
 .sidebar.collapsed .menu-list {
-    width: 80%;
-    display: grid;
-    place-content: center;
-    border-radius: 50%;
-    padding: 0;
-    background-color: transparent;
+  width: 80%;
+  display: grid;
+  place-content: center;
+  border-radius: 50%;
+  padding: 0;
+  background-color: transparent;
 }
 .sidebar.collapsed .menu-list .icon {
-    display: grid;
-    place-content: center;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    padding: 5px;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  padding: 5px;
 }
 .sidebar.collapsed .menu-list .icon:hover {
-    background-color: rgba(245, 245, 245, 0.699);
+  background-color: rgba(245, 245, 245, 0.699);
 }
 .sidebar.collapsed button {
-    display: none;
+  display: none;
 }
 .sidebar.collapsed .logout-icon {
-    margin-right: 12px;
+  margin-right: 12px;
 }

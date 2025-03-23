@@ -113,6 +113,7 @@
             
             <!-- Main Content -->
             <main class="main-content">
+                <div id="toast"></div>
                 <h2 class="title">Dashboard <span class="subtitle">Control Panel</span></h2>
             
                 <!-- Questions Section -->

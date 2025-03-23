@@ -19,12 +19,12 @@ function showToast(message, color) {
   toast.style.backgroundColor = color === "green" ? "green" : "red";
   toast.classList.remove("hidden");
   toast.style.color = "white";
-  toast.style.display = "block";
+  toast.style.display = "flex";
+  toast.classList.add("show-toast");
 
   // Hide after 3 seconds
   setTimeout(() => {
     toast.classList.add("hidden");
     toast.style.display = "none";
-    toast.classList.add("fade-out");
   }, 3000);
 }
