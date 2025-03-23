@@ -44,7 +44,33 @@
     <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 </head>
 <body>
-    <div id="toast" class="hidden fixed top-0 right-5 bg-green-500 text-white py-2 px-10 rounded shadow-lg transition-opacity duration-500" style="top: 10px;"></div>
+    <style>
+        #toast {
+            display: none;
+            position: fixed;
+            bottom: 10px;
+            right: 20px;
+            z-index: 1000;
+            background-color: green;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8px 5px;
+            width: 250px;
+            height: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 360ms ease-in-out;
+        }
+        #toast.fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+
+    </style>
+    <div id="toast"></div>
     <div class="container">
         <div class='nav-bar'>
             <p class='logo'> Complaint mgt </p>
@@ -87,7 +113,7 @@
                     <div class='menu-list'>
                         <div>
                         <i class="icon hgi hgi-stroke hgi-megaphone-02"></i>
-                            <a href="#" class="highlight">Submit Complaint</a>
+                            <a href="#" class="highlight">View Complaints</a>
                         </div>
                     </div>
                     <div class='menu-list'>
@@ -113,8 +139,66 @@
             
             <!-- Main Content -->
             <main class="main-content">
+                <style>
+                    .dashboard {
+                        display: flex;
+                        gap: 15px;
+                        margin-bottom: 1em;
+                    }
+                    .d-card {
+                        width: 200px;
+                        padding: 20px;
+                        border-radius: 8px;
+                        color: white;
+                        text-align: left;
+                        position: relative;
+                        cursor: pointer;
+                    }
+                    .d-card:hover {
+                        background-color: grey;
+                    }
+                    .d-card h1 {
+                        margin: 0;
+                        font-size: 2rem;
+                    }
+                    .d-card p {
+                        margin: 5px 0;
+                    }
+                    .d-card a {
+                        text-decoration: none;
+                        color: white;
+                        font-size: 14px;
+                        position: absolute;
+                        bottom: 10px;
+                    }
+                    .d-card:nth-child(1) { background-color: #f39c12; }
+                    .d-card:nth-child(2) { background-color: #00aaff; }
+                    .d-card:nth-child(3) { background-color: #e74c3c; }
+                    .d-card:nth-child(4) { background-color: #27ae60; }
+                </style>
                 <h2 class="title">Dashboard <span class="subtitle">Control Panel</span></h2>
-            
+                <div class="dashboard">
+                    <div class="d-card">
+                        <h1>2</h1>
+                        <p>Users Registrations</p>
+                        <a href="#">More info →</a>
+                    </div>
+                    <div class="d-card">
+                        <h1>4</h1>
+                        <p>Questions Asked</p>
+                        <a href="#">More info →</a>
+                    </div>
+                    <div class="d-card">
+                        <h1>4</h1>
+                        <p>Total Answers</p>
+                        <a href="#">More info →</a>
+                    </div>
+                    <div class="d-card">
+                        <h1>1000</h1>
+                        <p>System Stability Ratio</p>
+                        <a href="#">More info →</a>
+                    </div>
+                </div>
                 <!-- Questions Section -->
                 <div class="questions-section">
                     <h3>Direct Questions</h3>
@@ -184,6 +268,6 @@
         </main>
     </div>
     <script src='../../js/student-dashboard.js'></script>
-    <script src='../../js/toast.js'></script>
+    <script src='../../js/registration-toast.js'></script>
 </body>
 </html>

@@ -15,23 +15,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows == 1) {
         $user = $result->fetch_assoc();
         if (password_verify($password, $user['Password'])) {
-            // Start session and set user role
-            $_SESSION['user_id'] = $user['ID'];   // Store user ID
-            $_SESSION['role'] = $user['role'];     // Store role for access control
+            $_SESSION['user_id'] = $user['ID'];
+            $_SESSION['role'] = $user['role'];
             $_SESSION['email'] = $user['Email'];
-            $_SESSION['name'] = $user['Names'];  // Store email (optional)
+            $_SESSION['name'] = $user['Names'];
 
-            // Redirect based on role
             if ($user['role'] == 'Admin') {
-                header("Location: admin/admin-dashboard.php?success=logged-in");  // Admin dashboard
+               echo "<script>
+                    localStorage.setItem('toastMessage', 'Login successful');
+                    window.location.href = 'admin/admin-dashboard.php?success=loggedin';
+                </script>";
+                exit();
             } else {
-                header("Location: student/student-dashboard.php?success=logged-in"); // Student dashboard
+                echo "<script>
+                    localStorage.setItem('toastMessage', 'Login successful');
+                    window.location.href = 'student/student-dashboard.php?success=loggedin';
+                </script>";
+                exit();
             }
         } else {
-            echo "Incorrect password!";
+            echo "<script>
+                localStorage.setItem('toastMessage', 'Incorrect password!');
+                window.location.href = 'login.php';
+            </script>";
+            exit();
         }
     } else {
-        echo "No user found with that email address!";
+        echo "<script>
+            localStorage.setItem('toastMessage', 'No user found with that email address!');
+            window.location.href = 'login.php';
+        </script>";
+        exit();
     }
 
     $stmt->close();

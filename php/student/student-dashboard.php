@@ -43,7 +43,8 @@
     <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 </head>
 <body>
-    <div id="toast" class="hidden fixed top-0 right-5 bg-green-500 text-white py-2 px-10 rounded shadow-lg transition-opacity duration-500" style="top: 10px;"></div>
+    <div id="toast" style="display: none; position: fixed; top: 10px; right: 20px; background-color: green; color: white; padding: 8px 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: opacity 0.5s;"></div>
+
     <div class="container">
         <div class='nav-bar'>
             <p class='logo'> Complaint mgt </p>
@@ -183,6 +184,6 @@
         </main>
     </div>
     <script src='../../js/student-dashboard.js'></script>
-    <script src='../../js/toast.js'></script>
+    <script src='../../js/registration-toast.js'></script>
 </body>
 </html>

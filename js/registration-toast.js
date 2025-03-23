@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Check if there's a message in the URL (for PHP redirects)
+  // Check if there's a message in the URL (for successful login)
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has("success")) {
-    showToast("Registration successful!", "green");
+    showToast("Login successful!", "green");
   }
 
-  // Check for stored messages (for inline PHP messages)
+  // Check for stored error messages (from failed login attempts)
   const storedMessage = localStorage.getItem("toastMessage");
   if (storedMessage) {
     showToast(storedMessage, "red");
@@ -18,9 +18,13 @@ function showToast(message, color) {
   toast.textContent = message;
   toast.style.backgroundColor = color === "green" ? "green" : "red";
   toast.classList.remove("hidden");
+  toast.style.color = "white";
+  toast.style.display = "block";
 
   // Hide after 3 seconds
   setTimeout(() => {
     toast.classList.add("hidden");
+    toast.style.display = "none";
+    toast.classList.add("fade-out");
   }, 3000);
 }
