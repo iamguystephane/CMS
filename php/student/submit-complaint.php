@@ -38,7 +38,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complaint Management System - Student dashboard</title>
+    <title>Complaint Management System - Submit Complaint</title>
     <link rel="stylesheet" href='../../styles/student-dashboard.css' >
     <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 </head>
@@ -75,31 +75,31 @@
                     <div class='menu-list' >
                         <div>
                             <i class="icon hgi hgi-stroke hgi-dashboard-speed-02"></i>
-                            <a href="student-dashboard.php" class="active">Dashboard</a>
+                            <a href="#" class="active">Dashboard</a>
                         </div>
                     </div>
                     <div class='menu-list'>
                         <div>
                         <i class="icon hgi hgi-stroke hgi-user"></i>
-                            <a href="profile.php">My Profile</a>
+                            <a href="#">My Profile</a>
                         </div>
                     </div>
                     <div class='menu-list'>
                         <div>
                         <i class="icon hgi hgi-stroke hgi-megaphone-02"></i>
-                            <a href="submit-complaint.php" class="highlight">Submit Complaint</a>
+                            <a href="#" class="highlight">Submit Complaint</a>
                         </div>
                     </div>
                     <div class='menu-list'>
                         <div>
                         <i class="icon hgi hgi-stroke hgi-notification-03"></i>
-                            <a href="answers.php">My Questions (Answres)</a>
+                            <a href="#">My Questions (Answres)</a>
                         </div>
                     </div>
                     <div class='menu-list'>
                         <div>
                         <i class="icon hgi hgi-stroke hgi-notification-03"></i>
-                            <a href="questions.php">My Questions</a>
+                            <a href="#">My Questions</a>
                         </div>
                     </div>               
                     <a href="../logout.php" style="display: flex; align-items: center; width: 100%; text-decoration: none; color: white;" class="menu-list">
@@ -112,74 +112,100 @@
             </aside>
             
             <!-- Main Content -->
-            <main class="main-content">
-                <div id="toast"></div>
-                <h2 class="title">Dashboard <span class="subtitle">Control Panel</span></h2>
-            
-                <!-- Questions Section -->
-                <div class="questions-section">
-                    <h3>Direct Questions</h3>
-                    <div class="questions-list">
-                        <div style="display: flex; flex-direction: column; gap: 0px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0;"> 
-                                <p> admin </p>  
-                                <p> 15-03-2025 14:30 </p>
-                            </div>
-                            <div style="display: flex; gap: 5px; align-items: center; padding: 0;">
-                                
-                                    <i class="icon hgi hgi-stroke hgi-user"></i>
-                               
-                                <p class='question' style="width: 100%; padding: 40px 5px">This is a really needed system</p>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div class="questions-list">
-                        <div style="display: flex; flex-direction: column; gap: 0px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0;"> 
-                                <p> <?php echo htmlspecialchars($name)?> </p>  
-                                <p> 15-03-2025 14:30 </p>
-                            </div>
-                            <div style="display: flex; gap: 5px; align-items: center; padding: 0;">
-                                
-                            <img src="../../assets/images/profile-image.png" style="width: 40px; height: 40px; border-radius: 50%;"/> 
-                               
-                                <p class='question' style="width: 100%; padding: 40px 5px">This is a really needed system</p>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div class="question-input">
-                        <input type="text" placeholder="Type Question...">
-                        <button>Send</button>
-                    </div>
+             <style>
+                .complaint-container {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                    max-width: 900px;
+                }
+                .complaint-container .card {
+                    background: white;
+                    padding: 20px;
+                    border-radius: 5px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    width: 400px;
+                    height: 350px;
+                }
+                .complaint-container .card h3 {
+                    margin-top: 0;
+                    padding-bottom: 10px;
+                    border-bottom: 2px solid #ccc;
+                    color: gray;
+                    width: 100%;
+                    font-size: 17px;
+                    text-align: left;
+                }
+                .complaint-container .user-details {
+                    border-left: 5px solid #0d6efd;
+                }
+                .complaint-container .complain-details {
+                    border-left: 5px solid #f4a100;
+                }
+                .complaint-container label {
+                    display: block;
+                    margin: 10px 0 5px;
+                    color: gray;
+                    font-size: 13px;
+                    width: 100%;
+                    text-align: left;
+                }
+                .complaint-container input, .complaint-container select, .complaint-container textarea {
+                    width: 100%;
+                    padding: 8px;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    margin-bottom: 10px;
+                }
+                .complaint-container button {
+                    background-color: #0d6efd;
+                    color: white;
+                    padding: 10px;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+                .complaint-container button:hover {
+                    background-color: #0b5ed7;
+                }
+            </style>
+        <main class="main-content complaint-container">
+            <form style="display: flex; width: 75vw; align-items: center; justify-content: center; gap: 15px; ">
+                <div class="card user-details">
+                    <h3>User Details</h3>
+                    <label>Student Name</label>
+                    <input type="text" value="Japhet Johnson" readonly>
+                
+                    <label>Department</label>
+                    <input type="text" value="ICT" readonly>
+                
+                    <label>INDEX Number</label>
+                    <input type="text" value="2012/1/42536CT" readonly>
+                
+                    <label>Student Email</label>
+                    <input type="email" value="japhetjson@yahoo.com" readonly>
                 </div>
-            
-                <!-- Stats Cards -->
-                <div class="stats-grid">
-                    <div class="card orange">
-                        <p>MY QUESTIONS</p>
-                        <p class="number">3</p>
-                        <p>50% Increase in 30 Days</p>
-                    </div>
-                    <div class="card green">
-                        <p>QUESTIONS BANK</p>
-                        <p class="number">4</p>
-                        <p>20% Increase in 2 Days</p>
-                    </div>
-                    <div class="card red">
-                        <p>ANSWERS</p>
-                        <p class="number">4</p>
-                        <p>70% Increase in 4 Days</p>
-                    </div>
-                    <div class="card blue">
-                        <p>SYSTEM RELIABILITY</p>
-                        <p class="number">163,921</p>
-                        <p>40% Increase in 14 Days</p>
-                    </div>
-                </div>      
-            </div>
-            <footer class="footer">
+                <div class="card complain-details">
+                    <h3>Complain Details</h3>
+                    <label>Department</label>
+                    <select>
+                        <option>My Department - ICT</option>
+                    </select>
+                
+                    <label>Priority</label>
+                    <select>
+                        <option>Low</option>
+                        <option>Medium</option>
+                        <option>High</option>
+                    </select>
+                
+                    <label>Ask Your Question</label>
+                    <textarea placeholder="Enter question..."></textarea>
+                
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+            <footer class='complaint-footer' >
                 <p>Copyright &copy; 2018 <span class="bold">Final Year Project</span>. All rights reserved.</p>
             </footer>
         </main>

@@ -225,7 +225,6 @@ body {
   width: 100%;
   transition: all 360ms ease-in-out;
 }
-
 .title {
   font-size: 24px;
   display: flex;
@@ -353,7 +352,16 @@ body {
   display: none;
   overflow: hidden;
 }
-
+.complaint-footer {
+  background-color: gray;
+  width: 77vw;
+  color: white;
+  padding: 5px;
+  margin-top: 2.4em;
+}
+.sidebar.collapsed .complaint-footer {
+  width: 90vw;
+}
 /* Align menu icon properly */
 .nav-bar .menu-icon {
   position: absolute;
