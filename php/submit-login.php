@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['role'] = $user['role'];
             $_SESSION['email'] = $user['Email'];
             $_SESSION['name'] = $user['Names'];
-
+            $_SESSION['department'] = $user['Department'];
             if ($user['role'] == 'Admin') {
                echo "<script>
                     localStorage.setItem('toastMessage', 'Login successful');

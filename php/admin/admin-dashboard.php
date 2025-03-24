@@ -86,7 +86,7 @@
                     <div class='menu-list'>
                         <div>
                         <i class="icon hgi hgi-stroke hgi-megaphone-02"></i>
-                            <a href="#" class="highlight">View Complaints</a>
+                            <a href="view-complaints.php" class="highlight">View Complaints</a>
                         </div>
                     </div>
                     <div class='menu-list'>
