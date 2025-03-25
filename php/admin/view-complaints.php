@@ -83,7 +83,7 @@ $conn->close();
                     <div class='menu-list'>
                         <div>
                             <i class="icon hgi hgi-stroke hgi-notification-03"></i>
-                            <a href="#">My Questions (Answres)</a>
+                            <a href="complaint-reply.php">My Questions (Answers)</a>
                         </div>
                     </div>
                     <div class='menu-list'>
@@ -215,9 +215,9 @@ $conn->close();
                         <tbody>
                             <?php while ($row = $result->fetch_assoc()): ?>
                                 <tr>
-                                    <td><img src="https://via.placeholder.com/40" class="user-avatar" alt="User"><br><br><span><?= htmlspecialchars($row['names']) ?></span></td>
+                                    <td><i class="icon hgi hgi-stroke hgi-user"></i><span style="text-align: center; width: 100%;"><?= htmlspecialchars($row['names']) ?></span></td>
                                     <td><?= htmlspecialchars($row['description']) ?></td>
-                                    <td><span class="status-btn status-answer">Answer</span> <span class="status-btn status-close">Close</span></td>
+                                    <td><a class="status-btn status-answer">Answer</a> <span class="status-btn status-close">Close</span></td>
                                     <td><span class="priority-average"><?= htmlspecialchars($row['priority']) ?></span></td>
                                     <td><?= htmlspecialchars($row['created_at']) ?></td>
                                     <td><a href="#" class="delete-btn">🗑 Delete</a></td>
@@ -226,7 +226,7 @@ $conn->close();
                         </tbody>
                     </table>
                 </div>
-                <footer class="footer">
+                <footer style="width: 100%; position: fixed; bottom: 0; background-color: gray; padding: 5px; color: white;">
                     <p>Copyright &copy; 2018 <span class="bold">Final Year Project</span>. All rights reserved.</p>
                 </footer>
             </main>
