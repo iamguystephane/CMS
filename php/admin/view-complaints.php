@@ -15,20 +15,8 @@ $email = $_SESSION['email'];
 $name = $_SESSION['name'];
 
 // Optionally, fetch user details from the database if needed
-$sql = "SELECT * FROM `sign up` WHERE ID = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows == 1) {
-    $user = $result->fetch_assoc();
-    // You can now use the data from $user for other operations if needed
-} else {
-    echo "User not found!";
-}
-
-$stmt->close();
+$sql = "SELECT complaints.*, `sign up`.names AS names FROM complaints JOIN `sign up` ON complaints.studentID = `sign up`.id  ORDER BY complaints.created_at DESC";
+$result = $conn->query($sql);
 $conn->close();
 ?>
 
@@ -39,11 +27,11 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complaint Management System - Admin Dashboard</title>
+    <title>Complaint Management System - View Complaints</title>
     <link rel="stylesheet" href='../../styles/student-dashboard.css'>
     <link rel="stylesheet" href='../../styles/admin-dashboard.css'>
     <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
 </head>
 
 <body>
@@ -89,7 +77,7 @@ $conn->close();
                     <div class='menu-list'>
                         <div>
                             <i class="icon hgi hgi-stroke hgi-megaphone-02"></i>
-                            <a href="#" class="highlight">View Complaints</a>
+                            <a href="view-complaints.php" class="highlight">View Complaints</a>
                         </div>
                     </div>
                     <div class='menu-list'>
@@ -112,9 +100,68 @@ $conn->close();
                     </a>
                 </nav>
             </aside>
-
-            <!-- Main Content -->
             <style>
+                .complaint-container {
+                    width: 90%;
+                    max-width: 1000px;
+                    margin: auto;
+                    background: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 20px;
+                }
+
+                th,
+                td {
+                    border: 1px solid #ddd;
+                    padding: 10px;
+                    text-align: left;
+                }
+
+                th {
+                    background-color: #333;
+                    color: white;
+                }
+
+                .user-avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                }
+
+                .status-btn {
+                    display: inline-block;
+                    padding: 5px 10px;
+                    font-size: 14px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    text-decoration: none;
+                    margin-right: 5px;
+                }
+
+                .status-answer {
+                    background-color: blue;
+                    color: white;
+                }
+
+                .status-close {
+                    background-color: red;
+                    color: white;
+                }
+
+                .closed-status {
+                    background-color: gray;
+                    color: white;
+                    padding: 5px 10px;
+                    border-radius: 5px;
+                }
+
                 .priority-high {
                     background-color: red;
                     color: white;
@@ -129,24 +176,10 @@ $conn->close();
                     border-radius: 5px;
                 }
 
-                .status-btn {
-                    padding: 5px 10px;
-                    margin-right: 5px;
-                }
-
-                .status-answer {
-                    background-color: blue;
-                    color: white;
-                }
-
-                .status-close {
-                    background-color: red;
-                    color: white;
-                }
-
                 .delete-btn {
                     color: red;
                     cursor: pointer;
+                    text-decoration: none;
                 }
 
                 .response-badge {
@@ -164,62 +197,39 @@ $conn->close();
                     background-color: red;
                     color: white;
                 }
-
-                .user-avatar {
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 50%;
-                }
             </style>
-            <div class="main-content mt-4">
-                <table class="table table-bordered">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>User</th>
-                            <th>Question</th>
-                            <th>Status</th>
-                            <th>Priority</th>
-                            <th>Created On</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><img src="https://via.placeholder.com/40" class="user-avatar" alt="User"></td>
-                            <td>This is a really needed system ... <span class="response-badge has-response">Has a response</span></td>
-                            <td><span class="status-btn status-answer">Answer</span> <span class="status-btn status-close">Close</span></td>
-                            <td><span class="priority-high">Very High</span></td>
-                            <td>2018-03-16 17:15:32</td>
-                            <td><span class="delete-btn">🗑 Delete</span></td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://via.placeholder.com/40" class="user-avatar" alt="User"></td>
-                            <td>this is a test and I hope it works ... <span class="response-badge no-response">No Answer</span></td>
-                            <td><span class="status-btn status-answer">Answer</span> <span class="status-btn status-close">Close</span></td>
-                            <td><span class="priority-high">Very High</span></td>
-                            <td>2018-03-16 17:30:31</td>
-                            <td><span class="delete-btn">🗑 Delete</span></td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://via.placeholder.com/40" class="user-avatar" alt="User"></td>
-                            <td>This is my question from a question table ... <span class="response-badge has-response">Has a response</span></td>
-                            <td><span class="status-btn status-close">Closed</span></td>
-                            <td><span class="priority-average">Average</span></td>
-                            <td>2018-03-16 15:48:00</td>
-                            <td><span class="delete-btn">🗑 Delete</span></td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://via.placeholder.com/40" class="user-avatar" alt="User"></td>
-                            <td>When calling the paginate method, you will receive an instance of Illuminate\Pagination\L... <span class="response-badge no-response">No Answer</span></td>
-                            <td><span class="status-btn status-answer">Answer</span> <span class="status-btn status-close">Close</span></td>
-                            <td><span class="priority-average">Average</span></td>
-                            <td>2018-03-16 17:56:24</td>
-                            <td><span class="delete-btn">🗑 Delete</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
+            <!-- Main Content -->
+            <main class="main-content">
+                <div class="complaint-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Question</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                                <th>Submitted on</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = $result->fetch_assoc()): ?>
+                                <tr>
+                                    <td><img src="https://via.placeholder.com/40" class="user-avatar" alt="User"><br><br><span><?= htmlspecialchars($row['names']) ?></span></td>
+                                    <td><?= htmlspecialchars($row['description']) ?></td>
+                                    <td><span class="status-btn status-answer">Answer</span> <span class="status-btn status-close">Close</span></td>
+                                    <td><span class="priority-average"><?= htmlspecialchars($row['priority']) ?></span></td>
+                                    <td><?= htmlspecialchars($row['created_at']) ?></td>
+                                    <td><a href="#" class="delete-btn">🗑 Delete</a></td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <footer class="footer">
+                    <p>Copyright &copy; 2018 <span class="bold">Final Year Project</span>. All rights reserved.</p>
+                </footer>
+            </main>
         </div>
         <script src='../../js/student-dashboard.js'></script>
         <script src='../../js/registration-toast.js'></script>
