@@ -174,43 +174,7 @@
                     </div>
                 </div>
                 <!-- Questions Section -->
-                <div class="questions-section">
-                    <h3>Direct Questions</h3>
-                    <div class="questions-list">
-                        <div style="display: flex; flex-direction: column; gap: 0px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0;"> 
-                                <p> admin </p>  
-                                <p> 15-03-2025 14:30 </p>
-                            </div>
-                            <div style="display: flex; gap: 5px; align-items: center; padding: 0;">
-                                
-                                    <i class="icon hgi hgi-stroke hgi-user"></i>
-                               
-                                <p class='question' style="width: 100%; padding: 40px 5px">This is a really needed system</p>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div class="questions-list">
-                        <div style="display: flex; flex-direction: column; gap: 0px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0;"> 
-                                <p> <?php echo htmlspecialchars($name)?> </p>  
-                                <p> 15-03-2025 14:30 </p>
-                            </div>
-                            <div style="display: flex; gap: 5px; align-items: center; padding: 0;">
-                                
-                            <img src="../../assets/images/profile-image.png" style="width: 40px; height: 40px; border-radius: 50%;"/> 
-                               
-                                <p class='question' style="width: 100%; padding: 40px 5px">This is a really needed system</p>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div class="question-input">
-                        <input type="text" placeholder="Type Question...">
-                        <button>Send</button>
-                    </div>
-                </div>
+                
             
                 <!-- Stats Cards -->
                 <div class="stats-grid">

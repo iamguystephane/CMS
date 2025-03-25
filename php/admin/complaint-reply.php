@@ -14,6 +14,7 @@ $role = $_SESSION['role'];
 $email = $_SESSION['email'];
 $name = $_SESSION['name'];
 $department = $_SESSION['department'];
+$studentID = $_GET['studentID'];    //get the student's ID who submitted the complaint using the GET parameter, passed through the link in view-complaints.php
 
 // Optionally, fetch user details from the database if needed
 $sql = "SELECT * FROM `sign up` WHERE ID = ?";
@@ -21,13 +22,30 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
-
 if ($result->num_rows == 1) {
     $user = $result->fetch_assoc();
     // You can now use the data from $user for other operations if needed
 } else {
     echo "User not found!";
 }
+
+$complaintSql = "SELECT * FROM complaints WHERE studentID = ? ORDER BY created_at DESC LIMIT 1";
+$stmt = $conn->prepare($complaintSql);
+$stmt->bind_param("i", $studentID);
+$stmt->execute();
+$complaintResult = $stmt->get_result();
+
+if ($complaintResult->num_rows == 1) {
+    $complaint = $complaintResult->fetch_assoc();
+} else {
+    echo "<script>
+        localStorage.setItem('toastMessage', 'No complaints found for this student');
+        window.location.href = 'view-complaints.php?success=not-found';
+    </script>";
+    exit();
+}
+
+
 
 $stmt->close();
 $conn->close();
@@ -64,7 +82,7 @@ $conn->close();
                     <img src="../../assets/images/profile-image.png" class="avatar" alt="User">
                     <div>
                         <p class="username" style="font-size: 15px;"><?php echo htmlspecialchars($name) ?></p>
-                        <p> student </p>
+                        <p style="font-size: 14px"> <?php echo htmlspecialchars($user['role']) ?> </p>
                     </div>
                 </div>
                 <div class='search-box'>
@@ -90,13 +108,13 @@ $conn->close();
                     <div class='menu-list'>
                         <div>
                             <i class="icon hgi hgi-stroke hgi-megaphone-02"></i>
-                            <a href="#" class="highlight">Submit Complaint</a>
+                            <a href="view-complaints.php" class="highlight">Submit Complaint</a>
                         </div>
                     </div>
                     <div class='menu-list'>
                         <div>
                             <i class="icon hgi hgi-stroke hgi-notification-03"></i>
-                            <a href="#">My Questions (Answres)</a>
+                            <a href="#">My Questions (Answers)</a>
                         </div>
                     </div>
                     <div class='menu-list'>
@@ -185,34 +203,47 @@ $conn->close();
                 }
             </style>
             <main class="main-content complaint-container">
+                <div id="toast"></div>
                 <form style="display: flex; width: 75vw; align-items: center; justify-content: center; gap: 15px; " action='complaint-action.php' method="POST">
-                    <div class="card user-details">
-                        <h3>User Details</h3>
-                        <label>Student Name</label>
-                        <input type="text" value=<?php echo htmlspecialchars($name) ?> readonly name="name">
+                    <div class="questions-section" style="width: 100%; height: 80vh; overflow: auto;">
+                        <h3>Direct Questions</h3>
+                        <div class="questions-list">
+                            <div style="display: flex; flex-direction: column; gap: 0px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0;">
+                                    <p> admin </p>
+                                    <p> 15-03-2025 14:30 </p>
+                                </div>
+                                <div style="display: flex; gap: 5px; align-items: center; padding: 0;">
 
-                        <label>Department</label>
-                        <input type="text" value=<?php echo htmlspecialchars($department) ?> readonly name='department'>
+                                    <i class="icon hgi hgi-stroke hgi-user"></i>
 
-                        <label>Matricule</label>
-                        <input type="text" value="2012/1/42536CT" readonly name="matricule">
+                                    <p class='question' style="width: 100%; padding: 40px 5px">This is a really needed system</p>
+                                </div>
+                            </div>
 
-                        <label>Student Email</label>
-                        <input type="email" value=<?php echo htmlspecialchars($email) ?> readonly name='email'>
-                        <input type="hidden" name="studentID" value="<?php echo $user_id; ?>">
-                    </div>
-                    <div class="card complain-details">
-                        <h3>Complain Details</h3>
-                        <label>Priority</label>
-                        <input type="text" value=<?php echo htmlspecialchars($department) ?> readonly name="department">
-                        <label>Student's Complain</label>
-                        <textarea placeholder="Enter question..." name="complaint"></textarea>
-                        <label>Complaint reply</label>
-                        <textarea placeholder="Enter question..." name="complaint"></textarea>
-                        <button type="submit">Submit</button>
+                        </div>
+                        <div class="questions-list">
+                            <div style="display: flex; flex-direction: column; gap: 0px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0;">
+                                    <p> <?php echo htmlspecialchars($name) ?> </p>
+                                    <p> 15-03-2025 14:30 </p>
+                                </div>
+                                <div style="display: flex; gap: 5px; align-items: center; padding: 0;">
+
+                                    <img src="../../assets/images/profile-image.png" style="width: 40px; height: 40px; border-radius: 50%;" />
+
+                                    <p class='question' style="width: 100%; padding: 40px 5px">This is a really needed system</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="question-input" style="display: flex;">
+                            <input type="text" placeholder="Type a reply..." style="height: 30px;">
+                            <button style="width: 100px; height: 45px;">Send</button>
+                        </div>
                     </div>
                 </form>
-                <footer style="width: 100%; position: fixed; bottom: 0; background-color: gray; color: white; padding: 8px;">
+                <footer style="width: 100%; position: fixed; bottom: 0; background-color: gray; color: white; text-align: left; padding-left: 10px;">
                     <p>Copyright &copy; 2018 <span class="bold">Final Year Project</span>. All rights reserved.</p>
                 </footer>
             </main>

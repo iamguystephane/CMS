@@ -78,7 +78,7 @@ $conn->close();
                     <div class='menu-list'>
                         <div>
                             <i class="icon hgi hgi-stroke hgi-dashboard-speed-02"></i>
-                            <a href="#" class="active">Dashboard</a>
+                            <a href="student-dashboard.php" class="active">Dashboard</a>
                         </div>
                     </div>
                     <div class='menu-list'>

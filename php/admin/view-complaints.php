@@ -200,12 +200,13 @@ $conn->close();
             </style>
             <!-- Main Content -->
             <main class="main-content">
+                <div id="toast"></div>
                 <div class="complaint-container">
                     <table>
                         <thead>
                             <tr>
                                 <th>User</th>
-                                <th>Question</th>
+                                <th>Complaint</th>
                                 <th>Status</th>
                                 <th>Priority</th>
                                 <th>Submitted on</th>
@@ -215,12 +216,12 @@ $conn->close();
                         <tbody>
                             <?php while ($row = $result->fetch_assoc()): ?>
                                 <tr>
-                                    <td><i class="icon hgi hgi-stroke hgi-user"></i><span style="text-align: center; width: 100%;"><?= htmlspecialchars($row['names']) ?></span></td>
+                                    <td style="display: flex; flex-direction: column; align-items: center"><i class="icon hgi hgi-stroke hgi-user"></i><span style="text-align: center; width: 100%;"><?= htmlspecialchars($row['names']) ?></span></td>
                                     <td><?= htmlspecialchars($row['description']) ?></td>
-                                    <td><a class="status-btn status-answer">Answer</a> <span class="status-btn status-close">Close</span></td>
+                                    <td><a class="status-btn status-answer" href="complaint-reply.php?studentID=<?= htmlspecialchars($row['studentID']) ?>">Answer</a> <span class="status-btn status-close">Close</span></td>
                                     <td><span class="priority-average"><?= htmlspecialchars($row['priority']) ?></span></td>
                                     <td><?= htmlspecialchars($row['created_at']) ?></td>
-                                    <td><a href="#" class="delete-btn">🗑 Delete</a></td>
+                                    <td><a class='delete-btn' href="delete-complaint.php?studentID=<?= htmlspecialchars($row['studentID']) ?>">🗑 Delete</a></td>
                                 </tr>
                             <?php endwhile; ?>
                         </tbody>
