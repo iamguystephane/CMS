@@ -90,9 +90,125 @@ if ($lastMsgResult->num_rows > 0) {
         <div class='nav-bar'>
             <p class='logo'> Complaint mgt </p>
             <i class="menu-icon hgi hgi-stroke hgi-menu-01"></i>
-            <div class='profile'>
-                <img src="../../assets/images/profile-image.png" class="" alt="User">
-                <p class='profile-name'> <?php echo htmlspecialchars($name) ?> </p>
+            <div class='profile' style="flex-direction: column;">
+                <div class="nav-profile" style="display: flex; align-items: center; justify-content: end; gap: 5px; width: 100%;">
+                    <img src="../../assets/images/profile-image.png" class="" alt="User">
+                    <p class='profile-name'> <?php echo htmlspecialchars($name) ?> </p>
+                </div>
+                <style>
+                    #update-info-form {
+                        position: absolute;
+                        display: block;
+                        top: 75px;
+                        right: 15px;
+                        width: 300px;
+                        height: 300px;
+                        border-radius: 8px;
+                        background-color: black;
+                        padding: 15px;
+                        color: white;
+                        overflow: auto;
+                    }
+
+                    #update-info-form div {
+                        display: flex;
+                        flex-direction: column;
+                    }
+
+                    #update-info-form input,
+                    #update-info-form select {
+                        padding: 8px 5px;
+                        border-radius: 2px;
+                        color: black;
+                        border: 1px solid white;
+                    }
+
+                    #update-info-form input::placeholder {
+                        color: black;
+                    }
+
+                    #update-info-form label {
+                        font-size: 13px;
+                        margin-bottom: 5px;
+                        margin-top: 8px;
+                    }
+
+                    #update-info-form button {
+                        width: 100%;
+                        padding: 13px;
+                        background-color: green;
+                        color: white;
+                        border: none;
+                        border-radius: 5px;
+                        margin-top: 15px;
+                        cursor: pointer;
+                    }
+
+                    #update-info-form.hidden {
+                        display: none;
+                    }
+                </style>
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const form = document.getElementById('update-info-form');
+                        const name = document.querySelector('.names');
+                        const email = document.querySelector('.email');
+                        const department = document.querySelector('.department');
+                        const level = document.querySelector('.level');
+                        form.classList.add('hidden');
+
+                        const btn = document.querySelector('.nav-profile');
+                        btn.addEventListener("click", () => {
+                            form.classList.toggle('hidden');
+                        });
+
+                        form.addEventListener("submit", (e) => {
+                            e.preventDefault();
+                            if (name.value.trim() === "" || email.value.trim() === "" || department.value === "" || level.value === "") {
+                                alert("All fields must be filled!");
+                                return;
+                            }
+                            if (!/^[a-zA-Z\s]+$/.test(name.value)) {
+                                alert("Names must contain only letters and spaces.");
+                                return;
+                            }
+                            if (!/\S+@\S+\.\S+/.test(email.value)) {
+                                alert("Please enter a valid email address.");
+                                return;
+                            }
+                            form.submit();
+                        });
+                    });
+                </script>
+                <form id="update-info-form" id="update-info-form" action="update-profile.php" method="post">
+                    <div>
+                        <label> Names </label>
+                        <input type="text" class="names" name='name' value="<?= htmlspecialchars($name) ?>" />
+                    </div>
+                    <div>
+                        <label> Email </label>
+                        <input type="email" name="email" class="email" value="<?= htmlspecialchars($email) ?>" />
+                    </div>
+                    <div>
+                        <label> Department </label>
+                        <select class="department" name="department">
+                            <option> <?php echo htmlspecialchars($user['Department']) ?> </option>
+                            <option> Maritime </option>
+                            <option> Engineering </option>
+                            <option> Law </option>
+                        </select>
+                    </div>
+                    <div>
+                        <label> Level </label>
+                        <select class="level" name="level">
+                            <option><?php echo htmlspecialchars($user['Level']) ?> </option>
+                            <option> Level 100 </option>
+                            <option> Level 200 </option>
+                            <option> Level 300 </option>
+                        </select>
+                    </div>
+                    <button> Update Information </button>
+                </form>
             </div>
         </div>
         <div class='main-content-container'>
