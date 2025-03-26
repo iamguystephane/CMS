@@ -33,15 +33,10 @@ $stmt = $conn->prepare($complaintSql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $complaintResult = $stmt->get_result();
-
 if ($complaintResult->num_rows == 1) {
     $complaint = $complaintResult->fetch_assoc();
 } else {
-    echo "<script>
-        localStorage.setItem('toastMessage', 'No complaints found for this student');
-        window.location.href = 'view-complaints.php?success=not-found';
-    </script>";
-    exit();
+    $complaint = null;
 }
 
 $messagesSql = "SELECT * FROM complaint_messages WHERE sender_id = ? OR receiver_id = ? ORDER BY created_at ASC";
@@ -277,8 +272,7 @@ if ($lastMsgResult->num_rows > 0) {
                 <form class="questions-section" method="post">
                     <h3>Direct Questions</h3>
                     <div class="questions-list">
-                        <div style="display: flex; flex-direction: column;">
-
+                        <?php if ($complaint): ?>
                             <div style="width: 100%; display: flex; justify-content: space-between;">
                                 <p> <?php echo htmlspecialchars($complaint['names']) ?> </p>
                                 <p> <?php echo htmlspecialchars($complaint['created_at']) ?> </p>
@@ -286,7 +280,10 @@ if ($lastMsgResult->num_rows > 0) {
                             <p class='question' style="width: 98%; padding: 15px; color: white; border-radius: 5px; background-color: #0b5ed7">
                                 <?php echo htmlspecialchars($complaint['description']); ?>
                             </p>
-                        </div>
+                        <?php else: ?>
+                            <p style="color: red;">No complaints found. You can submit a complaint <a href="submit-complaint.php">here</a>.</p>
+                        <?php endif; ?>
+
                         <?php foreach ($messages as $msg): ?>
                             <div style="display: flex; flex-direction: column; gap: 5px;">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">

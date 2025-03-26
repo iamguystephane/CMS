@@ -23,13 +23,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($user['role'] == 'Admin') {
                echo "<script>
                     localStorage.setItem('toastMessage', 'Login successful');
-                    window.location.href = 'admin/admin-dashboard.php?success=loggedin';
+                    window.location.href = 'admin/admin-dashboard.php';
                 </script>";
                 exit();
             } else {
                 echo "<script>
                     localStorage.setItem('toastMessage', 'Login successful');
-                    window.location.href = 'student/student-dashboard.php?success=loggedin';
+                    window.location.href = 'student/student-dashboard.php';
                 </script>";
                 exit();
             }
