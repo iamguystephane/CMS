@@ -29,6 +29,7 @@ if ($result->num_rows == 1) {
     echo "User not found!";
 }
 
+
 $complaintSql = "SELECT * FROM complaints WHERE studentID = ? ORDER BY created_at DESC LIMIT 1";
 $stmt = $conn->prepare($complaintSql);
 $stmt->bind_param("i", $studentID);
@@ -45,10 +46,16 @@ if ($complaintResult->num_rows == 1) {
     exit();
 }
 
+$messagesSql = "SELECT * FROM complaint_messages WHERE sender_id = ? ORDER BY created_at ASC";
+$stmt = $conn->prepare($messagesSql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$messagesResult = $stmt->get_result();
+$messages = [];
 
-
-$stmt->close();
-$conn->close();
+while ($row = $messagesResult->fetch_assoc()) {
+    $messages[] = $row;
+}
 ?>
 
 
@@ -204,52 +211,65 @@ $conn->close();
             </style>
             <main class="main-content complaint-container">
                 <div id="toast"></div>
-                <form style="display: flex; width: 75vw; align-items: center; justify-content: center; gap: 15px; " action='complaint-action.php' method="POST">
+                <form style="display: flex; width: 75vw; align-items: center; justify-content: center; gap: 15px; " method="POST">
                     <div class="questions-section" style="width: 100%; height: 80vh; overflow: auto;">
-                        <h3>Direct Questions</h3>
+                        <h3>Complaint Conversation</h3>
                         <div class="questions-list">
-                            <div style="display: flex; flex-direction: column; gap: 0px;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0;">
-                                    <p> admin </p>
-                                    <p> 15-03-2025 14:30 </p>
+                            <div style="display: flex; flex-direction: column;">
+                                <div style="width: 100%; display: flex; justify-content: space-between;">
+                                    <p> <?php echo htmlspecialchars($complaint['names']) ?> </p>
+                                    <p> <?php echo htmlspecialchars($complaint['created_at']) ?> </p>
                                 </div>
-                                <div style="display: flex; gap: 5px; align-items: center; padding: 0;">
-
-                                    <i class="icon hgi hgi-stroke hgi-user"></i>
-
-                                    <p class='question' style="width: 100%; padding: 40px 5px">This is a really needed system</p>
-                                </div>
+                                <p class='question' style="width: 98%; padding: 15px; color: white; border-radius: 5px; background-color: #0b5ed7">
+                                    <?php echo htmlspecialchars($complaint['description']); ?>
+                                </p>
                             </div>
+                            <?php foreach ($messages as $msg): ?>
+                                <div style="display: flex; flex-direction: column; gap: 5px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <?php
+                                        $sender_id = $msg['sender_id'];
+                                        $query = "SELECT * FROM `sign up` WHERE id = ?";
+                                        $stmt = $conn->prepare($query);
+                                        $stmt->bind_param("i", $sender_id);
+                                        $stmt->execute();
+                                        $result = $stmt->get_result();
+                                        if ($result->num_rows == 1) {
+                                            $user = $result->fetch_assoc();
+                                        } else {
+                                            echo "User not found!";
+                                        }
 
-                        </div>
-                        <div class="questions-list">
-                            <div style="display: flex; flex-direction: column; gap: 0px;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0;">
-                                    <p> <?php echo htmlspecialchars($name) ?> </p>
-                                    <p> 15-03-2025 14:30 </p>
+                                        ?>
+                                        <p> <?= htmlspecialchars($user['Names']) ?> </p>
+                                        <p> <?php echo date("d-m-Y H:i", strtotime($msg['created_at'])); ?> </p>
+                                    </div>
+                                    <div style="display: flex; gap: 5px; align-items: center;">
+                                        <p class='question' style="width: 100%; padding: 10px; background: <?php echo ($user['role'] === 'admin') ? '#007bff' : '#ccc'; ?>; color: white; border-radius: 5px;">
+                                            <?php echo htmlspecialchars($msg['message']); ?>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div style="display: flex; gap: 5px; align-items: center; padding: 0;">
-
-                                    <img src="../../assets/images/profile-image.png" style="width: 40px; height: 40px; border-radius: 50%;" />
-
-                                    <p class='question' style="width: 100%; padding: 40px 5px">This is a really needed system</p>
-                                </div>
-                            </div>
-
+                            <?php endforeach; ?>
                         </div>
-                        <div class="question-input" style="display: flex;">
-                            <input type="text" placeholder="Type a reply..." style="height: 30px;">
-                            <button style="width: 100px; height: 45px;">Send</button>
+
+                        <div class="question-input" style="display: flex; gap: 5px;">
+                            <input type="text" id="replyMessage" placeholder="Type a reply..." style="height: 30px; flex-grow: 1;">
+                            <button style="width: 100px; height: 45px;" id="sendReply">Send</button>
                         </div>
                     </div>
+                    <input type="hidden" name='adminID' value="<?php echo htmlspecialchars($user_id) ?>" />
+                    <input type="hidden" name='studentID' value="<?php echo htmlspecialchars($complaint['studentID']) ?>" />
+                    <input type="hidden" name='userRole' value="<?php echo htmlspecialchars($role) ?>" />
                 </form>
                 <footer style="width: 100%; position: fixed; bottom: 0; background-color: gray; color: white; text-align: left; padding-left: 10px;">
                     <p>Copyright &copy; 2018 <span class="bold">Final Year Project</span>. All rights reserved.</p>
                 </footer>
             </main>
         </div>
-        <script src='../../js/student-dashboard.js'></script>
-        <script src='../../js/registration-toast.js'></script>
+        <script src='../../js/student-dashboard.js' defer></script>
+        <script src='../../js/registration-toast.js' defer></script>
+        <script src='../../js/send-reply-admin.js' defer></script>
 </body>
 
 </html>

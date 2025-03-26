@@ -60,7 +60,7 @@
                     <img src="../../assets/images/profile-image.png" class="avatar" alt="User">
                     <div>
                         <p class="username"><?php echo htmlspecialchars($name)?></p>
-                        <p style="font-size: 12px;"> admin </p>
+                        <p style="font-size: 12px;"> <?php echo htmlspecialchars($role) ?> </p>
                     </div>
                 </div>
                 <div class='search-box'>
