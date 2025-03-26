@@ -4,6 +4,7 @@ document.getElementById("sendReply").addEventListener("click", function (e) {
   let message = document.getElementById("replyMessage").value;
   let studentID = document.querySelector("input[name='studentID']").value;
   let adminID = document.querySelector("input[name='adminID']").value;
+  let senderName = document.getElementById("sender_name").value;
 
   if (message.trim() === "") {
     alert("Message cannot be empty!");
@@ -19,13 +20,15 @@ document.getElementById("sendReply").addEventListener("click", function (e) {
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log("Server response before if condition:", data);
       if (data.success) {
+        console.log("Server response after if condition:", data);
         // Append the new message to the messages list dynamically
         let messagesContainer = document.querySelector(".questions-list");
         let newMessage = document.createElement("div");
         newMessage.innerHTML = `
                 <div style="display: flex; justify-content: space-between;">
-                    <p>Admin</p>
+                    <p>${senderName}</p>
                     <p>${new Date().toLocaleString()}</p>
                 </div>
                 <p class="question" style="background: #007bff; color: white; padding: 10px; border-radius: 5px;">

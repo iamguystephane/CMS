@@ -46,9 +46,9 @@ if ($complaintResult->num_rows == 1) {
     exit();
 }
 
-$messagesSql = "SELECT * FROM complaint_messages WHERE sender_id = ? ORDER BY created_at ASC";
+$messagesSql = "SELECT * FROM complaint_messages WHERE sender_id = ? OR receiver_id = ? ORDER BY created_at ASC";
 $stmt = $conn->prepare($messagesSql);
-$stmt->bind_param("i", $user_id);
+$stmt->bind_param("ii", $user_id, $user_id);
 $stmt->execute();
 $messagesResult = $stmt->get_result();
 $messages = [];
@@ -239,7 +239,7 @@ while ($row = $messagesResult->fetch_assoc()) {
                                         } else {
                                             echo "User not found!";
                                         }
-
+                                       
                                         ?>
                                         <p> <?= htmlspecialchars($user['Names']) ?> </p>
                                         <p> <?php echo date("d-m-Y H:i", strtotime($msg['created_at'])); ?> </p>
@@ -259,6 +259,7 @@ while ($row = $messagesResult->fetch_assoc()) {
                         </div>
                     </div>
                     <input type="hidden" name='adminID' value="<?php echo htmlspecialchars($user_id) ?>" />
+                    <input type="hidden" name='sender-name' value="<?php echo htmlspecialchars($name) ?>" id="sender_name" />
                     <input type="hidden" name='studentID' value="<?php echo htmlspecialchars($complaint['studentID']) ?>" />
                     <input type="hidden" name='userRole' value="<?php echo htmlspecialchars($role) ?>" />
                 </form>

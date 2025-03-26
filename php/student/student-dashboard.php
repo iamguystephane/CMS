@@ -44,9 +44,9 @@ if ($complaintResult->num_rows == 1) {
     exit();
 }
 
-$messagesSql = "SELECT * FROM messages WHERE studentID = ? ORDER BY created_at ASC";
+$messagesSql = "SELECT * FROM complaint_messages WHERE sender_id = ? OR receiver_id = ? ORDER BY created_at ASC";
 $stmt = $conn->prepare($messagesSql);
-$stmt->bind_param("i", $studentID);
+$stmt->bind_param("ii", $user_id, $user_id);
 $stmt->execute();
 $messagesResult = $stmt->get_result();
 $messages = [];
@@ -55,8 +55,20 @@ while ($row = $messagesResult->fetch_assoc()) {
     $messages[] = $row;
 }
 
-$stmt->close();
-$conn->close();
+$msgReceiver = "SELECT * FROM complaint_messages WHERE receiver_id = ? ORDER BY created_at ASC";
+$stmt = $conn->prepare($msgReceiver);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$msgResult = $stmt->get_result();
+
+//getting the admin ID from the last submitted message
+$lastMsg = "SELECT admin_id FROM complaint_messages ORDER BY created_at DESC LIMIT 1";
+$stmt = $conn->prepare($lastMsg);
+$stmt->execute();
+$lastMsgResult = $stmt->get_result();
+if ($lastMsgResult->num_rows > 0) {
+    $lastAdminID = $lastMsgResult->fetch_row()[0];
+}
 ?>
 
 
@@ -150,6 +162,7 @@ $conn->close();
                     <h3>Direct Questions</h3>
                     <div class="questions-list">
                         <div style="display: flex; flex-direction: column;">
+
                             <div style="width: 100%; display: flex; justify-content: space-between;">
                                 <p> <?php echo htmlspecialchars($complaint['names']) ?> </p>
                                 <p> <?php echo htmlspecialchars($complaint['created_at']) ?> </p>
@@ -161,11 +174,25 @@ $conn->close();
                         <?php foreach ($messages as $msg): ?>
                             <div style="display: flex; flex-direction: column; gap: 5px;">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <p> <?php echo ($msg['sender'] === 'admin') ? $name : 'Student'; ?> </p>
+                                    <?php
+                                    $sender_id = $msg['sender_id'];
+                                    $query = "SELECT * FROM `sign up` WHERE id = ?";
+                                    $stmt = $conn->prepare($query);
+                                    $stmt->bind_param("i", $sender_id);
+                                    $stmt->execute();
+                                    $result = $stmt->get_result();
+                                    if ($result->num_rows == 1) {
+                                        $user = $result->fetch_assoc();
+                                    } else {
+                                        echo "User not found!";
+                                    }
+
+                                    ?>
+                                    <p> <?= htmlspecialchars($user['Names']) ?> </p>
                                     <p> <?php echo date("d-m-Y H:i", strtotime($msg['created_at'])); ?> </p>
                                 </div>
                                 <div style="display: flex; gap: 5px; align-items: center;">
-                                    <p class='question' style="width: 100%; padding: 10px; background: <?php echo ($msg['sender'] === 'admin') ? '#007bff' : '#ccc'; ?>; color: white; border-radius: 5px;">
+                                    <p class='question' style="width: 100%; padding: 10px; background: <?php echo ($user['role'] === 'admin') ? '#007bff' : '#ccc'; ?>; color: white; border-radius: 5px;">
                                         <?php echo htmlspecialchars($msg['message']); ?>
                                     </p>
                                 </div>
@@ -173,13 +200,16 @@ $conn->close();
                         <?php endforeach; ?>
 
                     </div>
-                    <div class="question-input">
-                        <input type="text" placeholder="Reply to admin" id="replyMessage">
-                        <button id="sendReply" style="cursor:pointer">Send</button>
-                    </div>
-                    <input type="hidden" name='adminID' value="<?php echo htmlspecialchars($user_id) ?>" />
+                    <?php if ($msgResult->num_rows > 0): ?>
+                        <div class="question-input">
+                            <input type="text" placeholder="Reply to admin" id="replyMessage">
+                            <button id="sendReply" style="cursor:pointer">Send</button>
+                        </div>
+                    <?php endif ?>
+                    <input type="hidden" name='adminID' value="<?php echo htmlspecialchars($lastAdminID) ?>" />
+                    <input type="hidden" name='sender-name' value="<?php echo htmlspecialchars($name) ?>" id="sender_name" />
                     <input type="hidden" name='studentID' value="<?php echo htmlspecialchars($complaint['studentID']) ?>" />
-                    <input type="hidden" name='userRole' value="<?php echo htmlspecialchars($role) ?>" id='userRole'/>
+                    <input type="hidden" name='userRole' value="<?php echo htmlspecialchars($role) ?>" id='userRole' />
                 </form>
 
                 <!-- Stats Cards -->

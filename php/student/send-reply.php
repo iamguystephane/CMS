@@ -23,7 +23,6 @@ if (!isset($_POST['message'], $_POST['studentID'], $_POST['adminID'])) {
 $message = trim($_POST['message']);
 $studentID = intval($_POST['studentID']);
 $adminID = intval($_POST['adminID']);
-$role = trim($_POST['userRole']);
 
 if (empty($message)) {
     echo json_encode(["success" => false, "error" => "Message cannot be empty"]);
@@ -31,9 +30,9 @@ if (empty($message)) {
 }
 
 // Insert the message into the database
-$sql = "INSERT INTO complaint_messages (sender_id, receiver_id, message, created_at) VALUES (?, ?, ?, NOW())";
+$sql = "INSERT INTO complaint_messages (sender_id, receiver_id, message, admin_id, created_at) VALUES (?, ?, ?, ?, NOW())";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("iis", $studentID, $adminID, $message);
+$stmt->bind_param("iisi", $studentID, $adminID, $message, $adminID);
 
 if ($stmt->execute()) {
     echo json_encode(["success" => true]);
