@@ -86,9 +86,12 @@ if ($lastMsgResult->num_rows > 0) {
             <p class='logo'> Complaint mgt </p>
             <i class="menu-icon hgi hgi-stroke hgi-menu-01"></i>
             <div class='profile' style="flex-direction: column;">
-                <div class="nav-profile" style="display: flex; align-items: center; justify-content: end; gap: 5px; width: 100%;">
-                    <img src="../../assets/images/profile-image.png" class="" alt="User">
-                    <p class='profile-name'> <?php echo htmlspecialchars($name) ?> </p>
+                <div style="display: flex; align-items: center; justify-content: end; width: 100%; gap: 10px;">
+                    <div class="nav-profile" style="display: flex; align-items: center; justify-content: end; gap: 5px; width: 100%;">
+                        <img src="../../assets/images/profile-image.png" class="" alt="User">
+                        <p class='profile-name'> <?php echo htmlspecialchars($name) ?> </p>
+                    </div>
+                    <a href="test.php"> tests </a>
                 </div>
                 <style>
                     #update-info-form {
