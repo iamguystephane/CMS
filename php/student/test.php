@@ -45,6 +45,38 @@
             </form>
         </div>
     </div>
+    <div class="!w-full min-h-screen flex items-center justify-center gap-4">
+        <div class="w-1/3">
+            <h1 class="w-full font-bold text-xl mt-4"> Truncating a table </h1>
+            <p class="w-full my-3"> Truncating a table means deleting all the records on that table </p>
+            <form class="shadow shadow-white rounded-lg p-4 mb-4 flex flex-col gap-4 w-full border" method="POST" action="test/truncate-table.php">
+                <div class="flex flex-col gap-2">
+                    <label> Table name </label>
+                    <input type="text" name='table-name' class="border w-full p-1 border-gray-500 focus:outline-blue-500 rounded px-2" placeholder="Enter the table's name that you want to truncate" />
+                    <button type='submit' class="w-full bg-green-500 text-white hover:bg-green-700 transition-all duration-500 ease-in-out py-2 cursor-pointer"> Truncate table </button>
+                </div>
+            </form>
+        </div>
+        <div class="w-1/3">
+            <h1 class="w-full font-bold text-xl mt-4"> Altering a table </h1>
+            <p class="w-full my-3"> Altering a table means deleting modifying the schema of that table </p>
+            <form class="shadow shadow-white rounded-lg p-4 mb-4 flex flex-col gap-4 w-full border" method="POST" action="test/alter-table.php">
+                <div class="flex flex-col gap-2">
+                    <label> Table name </label>
+                    <input type="text" name='table-name' class="border w-full p-1 border-gray-500 focus:outline-blue-500 rounded px-2" placeholder="Enter the table's name that you want to alter" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label> Column name </label>
+                    <input type="text" name='column-name' class="border w-full p-1 border-gray-500 focus:outline-blue-500 rounded px-2" placeholder="Enter the Column name that you want to add" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label> Datatype </label>
+                    <input type="text" name='column-type' class="border w-full p-1 border-gray-500 focus:outline-blue-500 rounded px-2" placeholder="Enter the datatype of the column" />
+                </div>
+                <button type='submit' class="w-full bg-green-500 text-white hover:bg-green-700 transition-all duration-500 ease-in-out py-2 cursor-pointer"> Alter table </button>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>

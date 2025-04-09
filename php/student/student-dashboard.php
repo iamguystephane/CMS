@@ -92,6 +92,7 @@ if ($lastMsgResult->num_rows > 0) {
                         <p class='profile-name'> <?php echo htmlspecialchars($name) ?> </p>
                     </div>
                     <a href="test.php"> tests </a>
+                    <a href="dcl-manager/access-control.php"> access control </a>
                 </div>
                 <style>
                     #update-info-form {
