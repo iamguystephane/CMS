@@ -16,15 +16,29 @@ while ($row = $user_result->fetch_assoc()) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // TCL: SET TRANSACTION ISOLATION LEVEL
+    $conn->query("SET TRANSACTION ISOLATION LEVEL READ COMMITTED");
+
     if (isset($_POST['create_user'])) {
         $new_user = $conn->real_escape_string($_POST['new_user']);
         $new_password = $conn->real_escape_string($_POST['new_password']);
-        $create_user_query = "CREATE USER '$new_user'@'localhost' IDENTIFIED BY '$new_password'";
 
-        if ($conn->query($create_user_query) === TRUE) {
-            $_SESSION['message'] = "User '$new_user' created successfully.";
-        } else {
-            $_SESSION['message'] = "Error creating user: " . $conn->error;
+        $conn->begin_transaction(); // BEGIN
+        try {
+            $conn->query("SAVEPOINT before_create_user"); // SAVEPOINT
+            $create_user_query = "CREATE USER '$new_user'@'localhost' IDENTIFIED BY '$new_password'";
+
+            if ($conn->query($create_user_query) === TRUE) {
+                $_SESSION['message'] = "User '$new_user' created successfully.";
+                $conn->commit(); // COMMIT
+            } else {
+                // TCL: ROLLBACK TO SAVEPOINT
+                $conn->query("ROLLBACK TO SAVEPOINT before_create_user");
+                throw new Exception("Error creating user: " . $conn->error);
+            }
+        } catch (Exception $e) {
+            $conn->rollback(); // Full ROLLBACK
+            $_SESSION['message'] = $e->getMessage();
         }
 
         header("Location: " . $_SERVER['PHP_SELF']);
@@ -32,26 +46,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (isset($_POST['assign_privileges']) && !empty($_POST['user']) && !empty($_POST['table'])) {
-        $table = preg_replace('/[^a-zA-Z0-9_]/', '', $_POST['table']);
-        $userHost = explode('@', $_POST['user']);
-        $user = $conn->real_escape_string($userHost[0]);
-        $host = $conn->real_escape_string($userHost[1]);
-        $dbName = $conn->query("SELECT DATABASE() AS db")->fetch_assoc()['db'];
-        $fullTable = "`$dbName`.`$table`";
+        $conn->begin_transaction(); // BEGIN
+        try {
+            $conn->query("SAVEPOINT before_privileges"); // SAVEPOINT
 
-        $selectedPrivs = isset($_POST['privileges']) ? $_POST['privileges'] : [];
-        $allPrivs = ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'CREATE', 'DROP', 'INDEX', 'ALTER'];
+            $table = preg_replace('/[^a-zA-Z0-9_]/', '', $_POST['table']);
+            $userHost = explode('@', $_POST['user']);
+            $user = $conn->real_escape_string($userHost[0]);
+            $host = $conn->real_escape_string($userHost[1]);
+            $dbName = $conn->query("SELECT DATABASE() AS db")->fetch_assoc()['db'];
+            $fullTable = "`$dbName`.`$table`";
 
-        foreach ($allPrivs as $priv) {
-            $hasPriv = in_array($priv, $selectedPrivs);
-            $alreadyHasPriv = userHasPrivilege($conn, $user, $host, $dbName, $table, $priv);
+            $selectedPrivs = isset($_POST['privileges']) ? $_POST['privileges'] : [];
+            $allPrivs = ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'CREATE', 'DROP', 'INDEX', 'ALTER'];
 
-            if ($hasPriv && !$alreadyHasPriv) {
-                $conn->query("GRANT $priv ON $fullTable TO '$user'@'$host'");
-            } elseif (!$hasPriv && $alreadyHasPriv) {
-                $conn->query("REVOKE $priv ON $fullTable FROM '$user'@'$host'");
+            foreach ($allPrivs as $priv) {
+                $hasPriv = in_array($priv, $selectedPrivs);
+                $alreadyHasPriv = userHasPrivilege($conn, $user, $host, $dbName, $table, $priv);
+
+                if ($hasPriv && !$alreadyHasPriv) {
+                    if (!$conn->query("GRANT $priv ON $fullTable TO '$user'@'$host'")) {
+                        throw new Exception("Error granting $priv: " . $conn->error);
+                    }
+                } elseif (!$hasPriv && $alreadyHasPriv) {
+                    if (!$conn->query("REVOKE $priv ON $fullTable FROM '$user'@'$host'")) {
+                        throw new Exception("Error revoking $priv: " . $conn->error);
+                    }
+                }
             }
+
+            $conn->commit(); // COMMIT
+            $_SESSION['message'] = "Privileges updated successfully.";
+        } catch (Exception $e) {
+            $conn->rollback(); // ROLLBACK
+            $_SESSION['message'] = "Transaction failed: " . $e->getMessage();
         }
+
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit;
     }
 }
 
@@ -74,8 +106,8 @@ function userHasPrivilege($conn, $user, $host, $db, $table, $priv)
 
     return false;
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

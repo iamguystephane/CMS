@@ -83,7 +83,7 @@ while ($row = $table_result->fetch_array()) {
                 </ul>
             </div>
         <?php endif; ?>
-
+        <a href='access-control.php' class="text-blue-500 my-4"> Access control </a>
         <form method="POST" class="flex flex-col gap-4">
             <div>
                 <label class="block font-semibold">Select Table to Test SELECT Privilege</label>
